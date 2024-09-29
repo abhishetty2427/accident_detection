@@ -1,0 +1,57 @@
+create table Monitoring_Region (
+Region_id varchar(20) primary key, 
+Address varchar(20) not null, 
+Password varchar(20) not null, 
+Telephone varchar(20) not null
+);
+
+CREATE TABLE `Accident` (
+  `Accident_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Camera_id` varchar(20) NOT NULL,
+  `path` varchar(60) NOT NULL,
+  `date_time` datetime NOT NULL,
+  PRIMARY KEY (`Accident_id`),
+  KEY `Camera_id` (`Camera_id`),
+  CONSTRAINT `Accident_fk_1` FOREIGN KEY (`Camera_id`) REFERENCES `CCTV` (`Camera_id`)
+);
+
+create table CCTV(
+Camera_id varchar(20) primary key,
+Region_id varchar(20) not null,
+latitude varchar(20) not null,
+longitude varchar(20) not null,
+working int not null,
+location varchar(50) not null,
+FOREIGN KEY (Region_id) REFERENCES Monitoring_Region(Region_id)
+);
+
+CREATE TABLE `Flag` (
+  `flag_var` int(11) NOT NULL,
+  `flag_key` int(11) primary key not null
+);
+
+CREATE TABLE `Buffer` (
+  `path` varchar(50) not null primary key
+);
+
+create table Emergency_Service(
+EmergencyService_id varchar(20) primary key,
+Type varchar(20) not null,
+Address varchar(20) not null,
+Telephone varchar(10) not null,
+Region_id varchar(20) not null,
+FOREIGN KEY (Region_id) REFERENCES Monitoring_Region(Region_id)
+);
+
+create table Temp(
+path varchar(20) not null,
+date_time datetime not null
+);
+
+
+
+INSERT INTO `emergency_service`(`EmergencyService_id`, `Type`,`Name`, `Address`, `Telephone`, `Region_id`) 
+values( 'EM001','Hospital','Nerul','DY Patil Hospital','+91-0000000000','001');
+values( 'EM002','Fire Station','Vashi','NMMC Fire Station','+91-1111111111','RAIT001');
+values( 'EM003','Police Station','Nerul','Nerul Police Thane','+91-2222222222','RAIT001');
+insert into Monitoring_Region values('RAIT001','Ramrao Adik Institute , Dy Patil Vidyanagar','12345','+91-1000000000');
